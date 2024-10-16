@@ -2,6 +2,7 @@ package com.example.swipevideo;
 
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -45,9 +46,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
      *
      */
     static class VideoViewHolder extends RecyclerView.ViewHolder {
-        TextView textVideoTitle, textVideoDescription;
+        TextView textVideoTitle, textVideoDescription, textVideoId;
         VideoView videoView;
         ProgressBar progressBar;
+        boolean isPlaying = true;
 
         /**
          *
@@ -58,12 +60,25 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             videoView = itemView.findViewById(R.id.videoView);
             textVideoTitle = itemView.findViewById(R.id.textVideoTitle);
             textVideoDescription = itemView.findViewById(R.id.textVideoDescription);
+            textVideoId = itemView.findViewById(R.id.textVideoId);
             progressBar = itemView.findViewById(R.id.videoProgressBar);
+
+            videoView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event){
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    togglePlayPause();
+                    return true;
+                }
+                return false;
+            }
+        });
         }
 
         void setVideoData(VideoItem videoItem){
             textVideoTitle.setText(videoItem.videoTitle);
             textVideoDescription.setText(videoItem.videoDescription);
+            textVideoId.setText("ID: #" + videoItem.uniqueId);
             videoView.setVideoPath(videoItem.videoURL);
 
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -89,7 +104,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                     mp.start();
                 }
             });
-
+        }
+        private void togglePlayPause(){
+            if(isPlaying) {
+                videoView.pause();
+            } else {
+                videoView.start();
+            }
+            isPlaying = !isPlaying;
         }
     }
 }
