@@ -16,10 +16,20 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+/**
+ * Adapter class for managing video items in a RecyclerView.
+ * This adapter creates ViewHolders and binds VideoItem data to them.
+ */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder>{
+
 
     private List<VideoItem> videoItems;
 
+    /**
+     * Constructs a new VideoAdapter with the given list of video items.
+     *
+     * @param videoItems The list of VideoItem objects to be displayed.
+     */
     public VideoAdapter(List<VideoItem> videoItems) {
         this.videoItems = videoItems;
     }
@@ -43,7 +53,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     }
 
     /**
-     *
+     * ViewHolder class for individual video items.
+     * This class holds references to the views in the item layout and handles video playback.
      */
     static class VideoViewHolder extends RecyclerView.ViewHolder {
         TextView textVideoTitle, textVideoDescription, textVideoId;
@@ -52,8 +63,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         boolean isPlaying = true;
 
         /**
+         * Constructs a new VideoViewHolder.
          *
-         * @param itemView
+         * @param itemView The View object containing the layout for an individual video item.
          */
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +87,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         });
         }
 
+        /**
+         * Sets the data for a video item to the views in this ViewHolder.
+         *
+         * @param videoItem The VideoItem object containing the data to be displayed.
+         */
         void setVideoData(VideoItem videoItem){
             textVideoTitle.setText(videoItem.videoTitle);
             textVideoDescription.setText(videoItem.videoDescription);
@@ -105,6 +122,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                 }
             });
         }
+
+        /**
+         * Toggles the play/pause state of the current video.
+         */
         private void togglePlayPause(){
             if(isPlaying) {
                 videoView.pause();

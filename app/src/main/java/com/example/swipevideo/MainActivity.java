@@ -12,8 +12,19 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main activity for the SwipeVideo application.
+ * This activity sets up the user interface and initializes the video player.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Called when the activity is first created.
+     * This method initializes the UI, sets up the ViewPager2 for video swiping,
+     * and populates it with VideoItem objects.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
